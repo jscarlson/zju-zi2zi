@@ -4,7 +4,8 @@ from __future__ import print_function
 
 import argparse
 
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import os
 from model.preprocessing_helper import CANVAS_SIZE, EMBEDDING_DIM
 from model.unet import UNet
