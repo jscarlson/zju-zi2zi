@@ -184,7 +184,7 @@ if __name__ == '__main__':
     img = Image.fromarray(np.uint8(img_A), "RGB")
     # img.save('my.png')
 
-    # mat =  misc.imread(img0).astype(np.float)
+    # mat =  imageio.imread(img0).astype(np.float)
     # side = int(mat.shape[1] / 2)
     # assert side * 2 == mat.shape[1]
     # img_A = mat[:, :side]  # target
