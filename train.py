@@ -4,7 +4,9 @@ from __future__ import print_function
 
 import argparse
 
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import os
 from model.preprocessing_helper import CANVAS_SIZE, EMBEDDING_DIM
 from model.unet import UNet
@@ -54,7 +56,6 @@ args = parser.parse_args()
 
 def main(_):
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         model = UNet(args.experiment_dir, batch_size=args.batch_size, experiment_id=args.experiment_id,
                      input_width=args.image_size, output_width=args.image_size, embedding_num=args.embedding_num,
