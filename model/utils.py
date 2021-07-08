@@ -6,7 +6,9 @@ from io import BytesIO
 
 import imageio
 import numpy as np
-import scipy.misc as misc
+
+from PIL import Image
+import numpy as np
 
 
 def pad_seq(seq, batch_size):
@@ -42,7 +44,7 @@ def read_split_image(img):
 
 def shift_and_resize_image(img, shift_x, shift_y, nw, nh):
     w, h = img.shape
-    enlarged = misc.imresize(img, [nw, nh])
+    enlarged = np.array(Image.fromarray(img).resize((nw, nh)))
     return enlarged[shift_x:shift_x + w, shift_y:shift_y + h]
 
 
@@ -66,12 +68,17 @@ def merge(images, size):
 
 def save_concat_images(imgs, img_path):
     concated = np.concatenate(imgs, axis=1)
-    misc.imsave(img_path, concated)
+    imageio.imwrite(img_path, concated)
 
 
 def compile_frames_to_gif(frame_dir, gif_file):
     frames = sorted(glob.glob(os.path.join(frame_dir, "*.png")))
     print(frames)
-    images = [misc.imresize(imageio.imread(f), interp='nearest', size=0.33) for f in frames]
+    # images = [misc.imresize(imageio.imread(f), interp='nearest', size=0.33) for f in frames]
+    images = []
+    for f in frames:
+        img = Image.fromarray(imageio.imread(f))
+        w, h = img.size
+        images.append(np.array(img.resize((int(0.33 * w), int(0.33 * h)), Image.NEAREST)))
     imageio.mimsave(gif_file, images, duration=0.1)
     return gif_file
