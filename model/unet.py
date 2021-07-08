@@ -3,7 +3,8 @@ import time
 from collections import namedtuple
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from scipy import misc
 
 from model.preprocessing_helper import save_imgs

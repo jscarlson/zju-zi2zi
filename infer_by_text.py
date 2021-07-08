@@ -5,7 +5,8 @@ from __future__ import print_function
 import argparse
 from io import BytesIO
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from PIL import ImageFont
 
 from model.dataset import get_batch_iter
