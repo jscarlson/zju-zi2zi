@@ -54,7 +54,7 @@ args = parser.parse_args()
 
 def main(_):
     config = tf.ConfigProto(
-        device_count = {'GPU': 0}
+        device_count = {'GPU': 1}
     )
     with tf.Session(config=config) as sess:
         model = UNet(args.experiment_dir, batch_size=args.batch_size, experiment_id=args.experiment_id,
