@@ -1,11 +1,11 @@
 import os
 import time
 from collections import namedtuple
+import imageio
 
 import numpy as np
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
-from scipy import misc
 
 from model.preprocessing_helper import save_imgs
 from .dataset import TrainDataProvider, InjectDataProvider
@@ -404,7 +404,7 @@ class UNet(object):
             os.makedirs(model_sample_dir)
 
         sample_img_path = os.path.join(model_sample_dir, "sample_%02d_%04d.png" % (epoch, step))
-        misc.imsave(sample_img_path, merged_pair)
+        imageio.imwrite(sample_img_path, merged_pair)
 
     def validate_model(self, val_iter, step, test_writer):
         print("Validating model..")
