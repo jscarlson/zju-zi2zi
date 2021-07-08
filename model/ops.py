@@ -10,7 +10,7 @@ tf.disable_v2_behavior()
 
 def batch_norm(x, is_training, epsilon=1e-5, decay=0.9, scope="batch_norm"):
     return tf.layers.batch_normalization(x, momentum=decay, epsilon=epsilon,
-                                        scale=True, training=is_training, scope=scope)
+                                        scale=True, training=is_training)
 
 
 def conv2d(x, output_filters, kh=5, kw=5, sh=2, sw=2, stddev=0.02, scope="conv2d"):
