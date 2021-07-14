@@ -96,9 +96,9 @@ def font2img(src, dst, charset, char_size, canvas_size,
     for c in dst_chars_kanji:
         e = draw_example(c, src_font, dst_font, canvas_size, filter_hashes, char_size)
         if e:
-            e.save(os.path.join(sample_dir, "%d_%04d.jpg" % (label, count)), mode='F')
+            e.save(os.path.join(sample_dir, "%d_%08d.jpg" % (label, count)), mode='F')
             count += 1
-            if count % 100 == 0:
+            if count % 1000 == 0:
                 print("processed %d chars" % count)
 
 
