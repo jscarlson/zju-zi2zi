@@ -6,6 +6,7 @@ import json
 import os
 import pdb
 import sys
+import random
 
 import collections
 import numpy as np
@@ -103,17 +104,22 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
+    kanji_unicode_range = range(int(0x4e00), int(0x9faf)+1)
+
     label = 0
     for root, dirs, files in os.walk(args.fonts_dir):
         for name in files:
-            if name.lower().endswith(".ttf") and name.lower() not in ["simsun.ttf", "Jinboran.ttf"]:
+            if name.lower().endswith(".ttf") and name.lower() not in ["simsun.ttf", "Jinboran.ttf", "NotoSansCJKjp-Regular.otf"]:
                 print("%s | %s" % (label, name))
                 dst_font = os.path.join(root, name)
 
                 if args.charset in ['CN', 'JP', 'KR', 'CN_T', 'GB775', 'GB6763']:
                     charset = locals().get("%s_CHARSET" % args.charset)
                 else:
-                    charset = [c for c in open(args.charset).readline()[:-1]]
+                    with open(args.charset) as f:
+                        charset = f.read().split()
+                        charset = list(set(charset + [chr(c) for c in random.sample(list(kanji_unicode_range), 3000)]))
+                        print(f"Length of charset is {len(charset)}; sample of chars: {''.join(charset[-30:])}")
 
                 if args.shuffle:
                     np.random.shuffle(charset)
