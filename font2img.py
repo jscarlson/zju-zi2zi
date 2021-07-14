@@ -85,15 +85,15 @@ def font2img(src, dst, charset, char_size, canvas_size,
 
 load_global_charset()
 parser = argparse.ArgumentParser(description='Convert font to images')
-parser.add_argument('--src_font', default='data/raw_fonts/SimSun.ttf', help='path of the source font')
-parser.add_argument('--fonts_dir', default='data/raw_fonts', help='dir path of the target fonts')
+parser.add_argument('--src_font', default='NotoSansCJKjp-Regular.otf', help='path of the source font')
+parser.add_argument('--fonts_dir', default='data/high_qual_jp_fonts', help='dir path of the target fonts')
 parser.add_argument('--filter', type=int, default=1, help='filter recurring characters')
 parser.add_argument('--charset', type=str, default='CN',
                     help='charset, can be either: CN, JP, KR , GB775, GB6763 or a one line file')
 parser.add_argument('--shuffle', type=int, default=True, help='shuffle a charset before processings')
 parser.add_argument('--char_size', type=int, default=CHAR_SIZE, help='character size')
 parser.add_argument('--canvas_size', type=int, default=CANVAS_SIZE, help='canvas size')
-parser.add_argument('--sample_count', type=int, default=1000, help='number of characters to draw')
+parser.add_argument('--sample_count', type=int, default=3000, help='number of characters to draw')
 parser.add_argument('--sample_dir', default='data/paired_images', help='directory to save examples')
 
 # These two are for package.py
@@ -118,14 +118,14 @@ if __name__ == "__main__":
                 else:
                     with open(args.charset) as f:
                         charset = f.read().split()
-                        charset = list(set(charset + [chr(c) for c in random.sample(list(kanji_unicode_range), 3000)]))
+                        charset = list(set(charset + [chr(c) for c in random.sample(list(kanji_unicode_range), args.sample_count)]))
                         print(f"Length of charset is {len(charset)}; sample of chars: {''.join(charset[-30:])}")
 
                 if args.shuffle:
                     np.random.shuffle(charset)
                 font2img(args.src_font, dst_font, charset, args.char_size,
                          args.canvas_size,
-                         args.sample_count, args.sample_dir, label, args.filter)
+                         len(charset), args.sample_dir, label, args.filter)
                 label += 1
     print("Number of fonts:", label)
 
