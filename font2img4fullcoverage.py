@@ -73,10 +73,6 @@ def font2img(src, dst, charset, char_size, canvas_size,
     assert os.path.isfile(src), "src file doesn't exist:%s" % src
     assert os.path.isfile(dst), "dst file doesn't exist:%s" % dst
 
-    kanji_unicode_range = range(int(0x4e00), int(0x9faf)+1)
-    charset = list(set(charset + [chr(c) for c in random.sample(list(kanji_unicode_range), args.sample_count)]))
-
-
     if not os.path.isdir(sample_dir):
         print("warning: creating sample dir: %s" % sample_dir)
         os.makedirs(sample_dir)
@@ -85,7 +81,8 @@ def font2img(src, dst, charset, char_size, canvas_size,
     dst_font = ImageFont.truetype(dst, size=char_size)
 
     # full coverage
-    dst_chars_dec, dst_chars = get_unicode_coverage_from_ttf(dst_font)
+    kanji_unicode_range = range(int(0x4e00), int(0x9faf)+1)
+    _, dst_chars = get_unicode_coverage_from_ttf(dst)
     dst_chars_kanji = [c for c in dst_chars if ((ord(c) in kanji_unicode_range) or (c in charset))]
     print(f"Total kanji or charset in this font: {len(dst_chars_kanji)}")
 
