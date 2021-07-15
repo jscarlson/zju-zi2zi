@@ -1,4 +1,5 @@
 import os
+import glob
 
 from PIL import Image, ImageEnhance
 
@@ -39,10 +40,35 @@ def char_img_iter(image_path, box_path):
             n += 1
 
 
+def pre_cropped_char_img_iter(image_dir):
+    assert os.path.isdir(image_dir), "image directory doesn't exist: %s" % image_dir
+
+    n = 0
+    image_paths = glob.glob(os.path.join(image_dir, '*'))
+
+    for image_path in image_paths:
+
+        char_img = Image.open(image_path)
+        ch = os.path.basename(image_path).split('_')[0]
+
+        # Leave enough space and resize to canvas_size
+        char_img = draw_single_char(char_img, canvas_size=CANVAS_SIZE, char_size=CHAR_SIZE)
+
+        # Add contrast
+        contrast = ImageEnhance.Contrast(char_img)
+        char_img = contrast.enhance(2.0)
+
+        # Add brightness
+        brightness = ImageEnhance.Brightness(char_img)
+        char_img = brightness.enhance(1.3)
+
+        yield ch, char_img
+        n += 1
+
+
 if __name__ == '__main__':
-    image_path = "../images/test_image.jpg"
-    box_path = "../images/test_image.box"
-    out_dir = "../characters/test_image/"
+    image_path = "/media/jscarlson/ADATASE800/Japan/font_gen/paired_training_data/tk/labeled_validated_char_crops"
+    out_dir = "/home/jscarlson/Downloads"
 
     # makedir
     try:
@@ -51,5 +77,10 @@ if __name__ == '__main__':
         pass
 
     # For debug only
-    for ch, char_img in char_img_iter(image_path, box_path):
+    debug_counter = 0
+    for ch, char_img in pre_cropped_char_img_iter(image_path):
         char_img.save(os.path.join(out_dir, ch + ".jpg"), "JPEG", quality=100)
+        debug_counter += 1
+        if debug_counter > 10:
+            print("Exiting...")
+            exit(0)
