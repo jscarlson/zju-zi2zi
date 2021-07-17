@@ -575,7 +575,7 @@ class UNet(object):
         total_batches = data_provider.compute_total_batch_num(self.batch_size)
         val_batch_iter = data_provider.get_val_iter(self.batch_size)
 
-        saver = tf.train.Saver(max_to_keep=3)
+        saver = tf.train.Saver(max_to_keep=20)
         train_writer = tf.summary.FileWriter(self.log_dir + '/train', self.sess.graph)
         test_writer = tf.summary.FileWriter(self.log_dir + '/test', self.sess.graph)
 
