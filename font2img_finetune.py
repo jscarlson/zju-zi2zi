@@ -31,7 +31,7 @@ if __name__ == '__main__':
         os.makedirs(args.sample_dir)
 
     for ch, dst_img in pre_cropped_char_img_iter(args.image_basename_path):
-        e = draw_example_src_only(ch, src_font, dst_img, CANVAS_SIZE, CHAR_SIZE)
+        e = draw_example_src_only(ch, src_font, dst_img, 64, 56)
         if e:
             for _ in range(args.resample):
                 e.save(os.path.join(args.sample_dir, "%d_%08d.jpg" % (args.embedding_id, count)), mode='F')
