@@ -7,10 +7,6 @@ from handwriting_preparation.preprocessing.crop_characters import char_img_iter,
 from model.preprocessing_helper import CHAR_SIZE, CANVAS_SIZE, draw_example_src_only
 from package import save_train_valid_data
 
-# SIZE OVERWRITE
-CHAR_SIZE = 56
-CANVAS_SIZE = 64
-
 parser = argparse.ArgumentParser(description='Convert font to images')
 parser.add_argument('--src_font', default="NotoSansCJKjp-Regular.otf", help='path of the source font')
 parser.add_argument('--image_basename_path',

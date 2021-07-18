@@ -8,8 +8,8 @@ from PIL import ImageDraw
 
 from model.utils import save_concat_images
 
-CANVAS_SIZE = 256
-CHAR_SIZE = 220
+CANVAS_SIZE = 64 # 256
+CHAR_SIZE = 56 # 220
 EMBEDDING_DIM = 128
 
 
