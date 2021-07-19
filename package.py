@@ -37,8 +37,13 @@ def pickle_examples(paths, train_path, val_path, train_val_split=0.1):
 def save_train_valid_data(save_dir, sample_dir, split_ratio):
     train_path = os.path.join(save_dir, "train.obj")
     val_path = os.path.join(save_dir, "val.obj")
-    pickle_examples(sorted(glob.glob(os.path.join(sample_dir, "*.jpg"))), train_path=train_path, val_path=val_path,
-                    train_val_split=split_ratio)
+    sample_dirs = sample_dir.split(",")
+    pickle_examples(
+        sorted(sum([glob.glob(os.path.join(sd, "*.jpg")) for sd in sample_dirs], [])), 
+        train_path=train_path, 
+        val_path=val_path,
+        train_val_split=split_ratio
+    )
 
 
 if __name__ == "__main__":
