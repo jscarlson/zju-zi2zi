@@ -22,7 +22,7 @@ SummaryHandle = namedtuple("SummaryHandle", ["d_merged", "g_merged"])
 
 
 class UNet(object):
-    def __init__(self, experiment_dir=None, experiment_id=0, batch_size=32, input_width=128, output_width=128,
+    def __init__(self, experiment_dir=None, experiment_id=0, batch_size=32, input_width=256, output_width=256,
                  generator_dim=64, discriminator_dim=64, L1_penalty=100, Lconst_penalty=15, Ltv_penalty=0.0,
                  Lcategory_penalty=1.0, embedding_num=80, embedding_dim=128, input_filters=1, output_filters=1,
                  validate_batches=2):
