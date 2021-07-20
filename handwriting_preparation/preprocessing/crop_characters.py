@@ -40,7 +40,7 @@ def char_img_iter(image_path, box_path):
             n += 1
 
 
-def pre_cropped_char_img_iter(image_dir, thresh = 180):
+def pre_cropped_char_img_iter(image_dir, thresh = 230):
     assert os.path.isdir(image_dir), "image directory doesn't exist: %s" % image_dir
 
     n = 0
