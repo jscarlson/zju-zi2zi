@@ -40,7 +40,7 @@ def char_img_iter(image_path, box_path):
             n += 1
 
 
-def pre_cropped_char_img_iter(image_dir):
+def pre_cropped_char_img_iter(image_dir, thresh = 180):
     assert os.path.isdir(image_dir), "image directory doesn't exist: %s" % image_dir
 
     n = 0
@@ -61,6 +61,10 @@ def pre_cropped_char_img_iter(image_dir):
         # Add brightness
         brightness = ImageEnhance.Brightness(char_img)
         char_img = brightness.enhance(1.3)
+
+        # Binarize
+        fn = lambda x : 255 if x > thresh else 0
+        char_img = char_img.convert('L').point(fn, mode='1')
 
         yield ch, char_img
         n += 1
